@@ -4,7 +4,8 @@
   "description": "Advent of Code",
   "main": "1-1.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --build"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/martijn500/advent-of-code-2021/issues"
   },
-  "homepage": "https://github.com/martijn500/advent-of-code-2021#readme"
+  "homepage": "https://github.com/martijn500/advent-of-code-2021#readme",
+  "dependencies": {
+    "typescript": "^4.5.2"
+  }
 }
