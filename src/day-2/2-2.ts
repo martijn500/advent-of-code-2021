@@ -4,21 +4,24 @@ import {Command} from '../models/command.model';
 const commands: Command[] = INPUT;
 const startPosition = 0;
 const startDepth = 0;
+const startAim = 0;
 let position = startPosition;
 let depth = startDepth;
+let aim = startAim;
 
 commands.forEach((command: Command) => {
   switch (command.direction) {
     case 'forward':
       position += command.amount;
+      depth += aim * command.amount;
       break;
 
     case 'up':
-      depth -= command.amount;
+      aim -= command.amount;
       break;
 
     case 'down':
-      depth += command.amount;
+      aim += command.amount;
       break;
   }
 });

@@ -5,3 +5,5 @@ let count = 0;
 depths.forEach((depth, index) => {
   if (depth > depths[index -1]) count++;
 });
+
+console.log('answer: ', count);

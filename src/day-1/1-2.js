@@ -9,3 +9,5 @@ depths.forEach((depth, index) => {
 sums.forEach((sum, index) => {
   if (sum > sums[index -1]) count++;
 });
+
+console.log('answer: ', count);
