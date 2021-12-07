@@ -18,6 +18,10 @@
   },
   "homepage": "https://github.com/martijn500/advent-of-code-2021#readme",
   "dependencies": {
+    "lodash": "^4.17.21",
     "typescript": "^4.5.2"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.177"
   }
 }
