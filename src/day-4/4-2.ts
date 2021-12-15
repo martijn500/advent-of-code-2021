@@ -3,6 +3,7 @@ import { dataBingo, dataBoards } from './data';
 const bingoNumbers = dataBingo;
 const boards: number[][] = dataBoards;
 const boardsMarked: string[][] = [];
+const winningBoards: number[] = [];
 const mark = 'X';
 const rowIndexes = [
   [0, 1, 2, 3, 4],
@@ -18,26 +19,29 @@ const columnIndexes = [
   [3, 8, 13, 18, 23],
   [4, 9, 14, 19, 24]
 ];
-let winningBoard: number[] = [];
+let lastWinningBoard: number[] = [];
 let markedBoard: string[] = [];
-let lastNumber: number;
+let lastNumber = 0;
 
 dataBoards.forEach(board => {
   boardsMarked.push(new Array(board.length));
 });
 
-lastNumber = bingoNumbers.find(bingoNumber => {
-  winningBoard = boards.find((board, boardIndex) => {
+for (let i = 0; winningBoards.length < 100; i++) {
+  boards.forEach((board, boardIndex) => {
     return board.find((numberOnBoard, bingoIndex) => {
-      if (numberOnBoard === bingoNumber) {
+      if (numberOnBoard === bingoNumbers[i] && winningBoards.indexOf(boardIndex) === -1) {
         markedBoard = boardsMarked[boardIndex];
         markedBoard[bingoIndex] = mark;
-        return isThereABingo(markedBoard);
+        if (isThereABingo(markedBoard)) {
+          lastNumber = bingoNumbers[i];
+          lastWinningBoard = board;
+          winningBoards.push(boardIndex);
+        };
       }
     });
-  }) as number[]; // we're pretty sure there is a bingo after all numbers are drawn
-  return winningBoard;
-}) as number;
+  });
+}
 
 function isThereABingo(board: string[]) {
   return rowIndexes.find(row => findLine(row, board)) || columnIndexes.find(column => findLine(column, board))
@@ -47,16 +51,14 @@ function findLine(line: number[], board: string[]) {
   return line.every(position => board[position] === mark);
 }
 
-if (lastNumber) {
-  let sum = 0;
-  winningBoard.forEach((hit, index) => {
-    if (markedBoard[index] != mark) {
-      sum += winningBoard[index];
-    }
-  });
+let sum = 0;
+lastWinningBoard.forEach((hit, index) => {
+  if (markedBoard[index] != mark) {
+    sum += lastWinningBoard[index];
+  }
+});
 
-  console.log('winningBoard', winningBoard);
-  console.log('markedBoard', markedBoard);
-  console.log('lastNumber', lastNumber);
-  console.log('sum of unmarked numbers on board * last drawn number =', sum * lastNumber);
-}
+console.log('winningBoard', lastWinningBoard);
+console.log('markedBoard', markedBoard);
+console.log('lastNumber', lastNumber);
+console.log('sum of unmarked numbers on board * last drawn number =', sum * lastNumber);
